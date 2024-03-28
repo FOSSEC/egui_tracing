@@ -20,6 +20,7 @@ pub struct EventCollector {
     allowed_targets: AllowedTargets,
     level: Level,
     events: Arc<Mutex<Vec<CollectedEvent>>>,
+    max_events: Option<usize>,
 }
 
 impl EventCollector {
@@ -29,6 +30,10 @@ impl EventCollector {
 
     pub fn with_level(self, level: Level) -> Self {
         Self { level, ..self }
+    }
+
+    pub fn with_max_events(self, max_events: usize) -> Self {
+        Self { max_events: Some(max_events), ..self }
     }
 
     pub fn allowed_targets(self, allowed_targets: AllowedTargets) -> Self {
@@ -56,7 +61,13 @@ impl EventCollector {
                     .any(|target| event.target.starts_with(target)),
             };
             if should_collect {
-                self.events.lock().unwrap().push(event);
+                let mut events = self.events.lock().unwrap();
+                if let Some(max_events) = self.max_events {
+                    if events.len() >= max_events {
+                        events.remove(0);
+                    }
+                }
+                events.push(event);
             }
         }
     }
@@ -68,6 +79,7 @@ impl Default for EventCollector {
             allowed_targets: AllowedTargets::All,
             events: Arc::new(Mutex::new(Vec::new())),
             level: Level::TRACE, // capture everything by default.
+            max_events: None,
         }
     }
 }
