@@ -13,7 +13,7 @@ Add `egui_tracing_rs` to your `Cargo.toml` dependencies:
 
 ```toml
 [dependencies]
-egui_tracing_rs = "0.2.2"
+egui_tracing_rs = "0.3.0"
 ```
 
 ## Example
@@ -33,3 +33,4 @@ Contributions to `egui_tracing_rs` are welcome! Please open an issue or submit a
 ## License
 
 `egui_tracing_rs` is released under the [Unlicense](LICENSE). This means the code is in the public domain, and you can use, modify, and distribute it without any restrictions. For more information, please see the [Unlicense website](https://unlicense.org/).
+
