@@ -13,7 +13,7 @@ Add `egui_tracing_rs` to your `Cargo.toml` dependencies:
 
 ```toml
 [dependencies]
-egui_tracing_rs = "0.3.0"
+egui_tracing_rs = "0.3.1"
 ```
 
 ## Example
